@@ -1,0 +1,17 @@
+{
+  "name": "fullstackapi-express-demo",
+  "version": "1.0.0",
+  "description": "Express példák",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "http-errors": "^2.0.0"
+  }
+}
