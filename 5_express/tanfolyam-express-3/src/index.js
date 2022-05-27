@@ -6,12 +6,12 @@ const logger = require('./config/logger')
 const mongoose = require('mongoose')
 // Promisként szeretnénk dolgozni vele
 mongoose.Promise = global.Promise
-// Atlas jelszó - Q1HhMl1xz4sdTrgD
+// Atlas jelszó - ***
 
 const port = 3000;
 
 // Database connection
-mongoose.connect('mongodb+srv://Nodeuser:Q1HhMl1xz4sdTrgD@cluster0.wungfue.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://Nodeuser:<password>@cluster0.wungfue.mongodb.net/?retryWrites=true&w=majority', {
   // új url értelmezőt használunk
   useNewUrlParser: true,
   // adatbázis feltérképezése
