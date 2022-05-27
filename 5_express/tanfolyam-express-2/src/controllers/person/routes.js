@@ -1,23 +1,39 @@
 const express = require('express');
 const data = require('./data');
+const createError = require('http-errors')
+const logger = require('../../config/logger')
 
 // express útválasztó router létrehozása
 const controller = express.Router()
 
 // Get all person
 controller.get('/', (req, res) => {
+  // debug szintű logolás - nem kerül bele a fájlba
+  // kiírjuk, hogy hány elemet adtunk vissza a kliensnek
+  logger.debug(`Get all persons, returning ${data.length} items.`);
   // a nyers adatokat json formátumban adja vissza
   res.json(data)
 });
 
 // Get one person
-controller.get('/:id', (req, res) => {
+controller.get('/:id', (req, res, next) => {
   const person = data.find(person => person.id === Number(req.params.id));
+  if (!person) {
+    return next(new createError.NotFound('Person is not found.'))
+  }
   res.json(person)
 });
 
 // Create a new person
-controller.post('/', (req, res) => {
+controller.post('/', (req, res, next) => {
+  const { last_name, first_name, email } = req.body
+  if (!last_name || !first_name || !email) {
+    return next(
+      new createError.BadRequest('Missing properties!')
+    )
+  }
+
+
   const newPerson = req.body;
   newPerson.id = data[data.length - 1].id + 1;
   data.push(newPerson);
@@ -27,11 +43,16 @@ controller.post('/', (req, res) => {
 })
 
 // Update a person
-controller.put('/:id', (req, res) => {
+controller.put('/:id', (req, res, next) => {
   const id = req.params.id;
   // const id = parseInt(req.params.id)
   const index = data.findIndex(person => person.id === Number(id));
-  const { first_name, last_name, email } = req.body;
+  const { last_name, first_name, email } = req.body
+  if (!last_name || !first_name || !email) {
+    return next(
+      new createError.BadRequest('Missing properties!')
+    )
+  }
 
   data[index] = {
     id,
@@ -53,8 +74,11 @@ controller.put('/:id', (req, res) => {
 })
 
 // Delete a person
-controller.delete('/:id', (req, res) => {
+controller.delete('/:id', (req, res, next) => {
   const index = data.findIndex(person => person.id === Number(req.params.id));
+  if (index === -1) {
+    return next(new createError.NotFound('Person is not found.'))
+  }
   data.splice(index, 1);
   res.json({})
 });
