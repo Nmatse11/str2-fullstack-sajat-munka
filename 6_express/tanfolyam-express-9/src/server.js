@@ -1,21 +1,19 @@
-require('dotenv').config();
-const config = require('config')
 const express = require('express');
+const config = require('config')
 const app = express();
 const bodyParser = require('body-parser')
-const morgan = require('morgan');
 const logger = require('./config/logger')
+const morgan = require('morgan');
+// SWAGGER
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+
 const mongoose = require('mongoose')
 // Promisként szeretnénk dolgozni vele
 mongoose.Promise = global.Promise
 
-const port = process.env.PORT || 3000;
-
-// Ha a config-ban nincs database - hiba logolás és alkalmazás leállítása
-if (!config.has('database')) {
-  logger.error('No database config found.');
-  process.exit();
-}
+// SWAGGER dokumentum
+const swaggerDocument = YAML.load('./docs/swagger.yaml');
 
 // változók lementése a config-ból
 const { username, password, host } = config.get('database');
@@ -52,7 +50,11 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // routerek beállítása a use() segítségéve
-app.use('/person', require('./controllers/person/routes'));
+//app.use('/person', require('./controllers/person/routes'));
+app.use('/person', require('./controllers/person/person.routes'));
+app.use('/post', require('./controllers/post/post.routes'));
+// swagger router
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((err, req, res, next) => {
   res.status(err.statusCode);
@@ -64,7 +66,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-// port figyelése
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+module.exports = app;

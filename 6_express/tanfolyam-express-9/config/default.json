@@ -1,0 +1,7 @@
+{
+  "database": {
+    "username": "Nodeuser",
+    "password": "***",
+    "host": "cluster0.wungfue.mongodb.net/JestDB?retryWrites=true&w=majority"
+  }
+}

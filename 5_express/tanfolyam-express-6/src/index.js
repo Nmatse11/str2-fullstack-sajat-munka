@@ -8,7 +8,6 @@ const logger = require('./config/logger')
 const mongoose = require('mongoose')
 // Promisként szeretnénk dolgozni vele
 mongoose.Promise = global.Promise
-// Atlas jelszó - Q1HhMl1xz4sdTrgD
 
 const port = process.env.PORT || 3000;
 
@@ -22,7 +21,7 @@ if (!config.has('database')) {
 const { username, password, host } = config.get('database');
 
 // Database connection
-// mongoose.connect('mongodb+srv://Nodeuser:Q1HhMl1xz4sdTrgD@cluster0.wungfue.mongodb.net/?retryWrites=true&w=majority', {
+// mongoose.connect('mongodb+srv://Nodeuser:<password>@cluster0.wungfue.mongodb.net/?retryWrites=true&w=majority', {
 // mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}`, {
 mongoose.connect(`mongodb+srv://${username}:${password}@${host}`, {
   // új url értelmezőt használunk

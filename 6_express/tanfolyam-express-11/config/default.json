@@ -1,0 +1,7 @@
+{
+  "database": {
+    "username": "Nodeuser",
+    "password": "***",
+    "host": "mongo:27017/?retryWrites=true&w=majority"
+  }
+}

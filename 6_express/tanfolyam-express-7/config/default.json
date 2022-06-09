@@ -1,0 +1,7 @@
+{
+  "database": {
+    "username": "Nodeuser",
+    "password": "***",
+    "host": "cluster0.wungfue.mongodb.net/myFirstDatabas?retryWrites=true&w=majority"
+  }
+}
