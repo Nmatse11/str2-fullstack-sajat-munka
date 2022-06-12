@@ -1,0 +1,7 @@
+{
+  "database": {
+    "user": "dbUser",
+    "pass": "***",
+    "host": "fapi02-cluster.jnycc.mongodb.net/TEST?retryWrites=true&w=majority"
+  }
+}
